@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import  * as cartModule  from "../data/cart.js";
 import { products } from "../data/products.js";
 let productsHTML = "";
 
@@ -54,40 +54,25 @@ products.forEach((product) => {
         </button>
     </div>`; // the "data" attribute above it an HTML attribute that starts with "data-" then any name of choice (kebab-case)
 }); // this data attribute is used to attach any information to an element
-// [data](#anchor)
-console.log(productsHTML);
-
+// [data](#anchor3)
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
+//# the who add-t-cart function
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
-    const productId = button.dataset.productId;
-
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    if (matchingItem) {
-      matchingItem.quantity++;
-    } else {
-      cart.push({
-        productId,
-        quantity: 1,
-      });
-    }
-
+    const productId = button.dataset.productId; 
+                                      // [data](anchor3)
+    cartModule.addToCart(productId); //$ adding item to the array
+    //[addToCart](anchor4)
+    
+    
+    //$ updating the cart sign
     let cartQuantity = 0;
+        cartModule.cart.forEach((item) => {
+            cartQuantity += item.quantity;
+        });
+        document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+        console.log(cartQuantity); 
 
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-
-    console.log(cart);
-    console.log(cartQuantity);
-    document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
   });
 });
