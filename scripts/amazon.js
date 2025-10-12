@@ -49,7 +49,7 @@ products.forEach((product) => {
         </div>
 
         <button class="add-to-cart-button button-primary js-add-to-cart" 
-        data-product-id="${product.id}">
+        data-product-id="${product.id}" data-product-price="${(product.priceCents / 100).toFixed(2)}">
         Add to Cart
         </button>
     </div>`; // the "data" attribute above it an HTML attribute that starts with "data-" then any name of choice (kebab-case)
@@ -61,8 +61,9 @@ document.querySelector(".js-products-grid").innerHTML = productsHTML;
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
     const productId = button.dataset.productId; 
+    const productPrice = button.dataset.productPrice; 
                                       // [data](anchor3)
-    cartModule.addToCart(productId); //$ adding item to the array
+    cartModule.addToCart(productId, productPrice); //$ adding item to the array
     //[addToCart](anchor4)
     
     
