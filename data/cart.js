@@ -14,7 +14,6 @@ export function addToCart(productId, productPrice) {
   } else {
     cart.push({
       productId,
-      productPrice,
       quantity: 1,
     });
   }
