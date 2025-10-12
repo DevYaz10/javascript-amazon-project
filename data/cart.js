@@ -1,6 +1,6 @@
 export const cart = [];
 
-export function addToCart(productId, productPrice) {
+export function addToCart(productId) {
   let matchingItem;
 
   cart.forEach((cartItem) => {
@@ -14,7 +14,6 @@ export function addToCart(productId, productPrice) {
   } else {
     cart.push({
       productId,
-      productPrice,
       quantity: 1,
     });
   }
