@@ -49,7 +49,7 @@ products.forEach((product) => {
         </div>
 
         <button class="add-to-cart-button button-primary js-add-to-cart" 
-        data-product-id="${product.id}" data-product-price="${(product.priceCents / 100).toFixed(2)}">
+        data-product-id="${product.id}">
         Add to Cart
         </button>
     </div>`; // the "data" attribute above it an HTML attribute that starts with "data-" then any name of choice (kebab-case)
