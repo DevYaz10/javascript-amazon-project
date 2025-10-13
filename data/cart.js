@@ -30,15 +30,20 @@ export function addToCart(productId) {
 }
 // [addToCart](#anchor4)
 
+// export function removeFromCart(productId) {
+//   const newCart = [];
+
+//   cart.forEach((cartItem) => {
+//     if (cartItem.productId !== productId) {
+//       newCart.push(cartItem);
+//     }
+//   });
+
+//   cart = newCart
+// }
+//! this is a trashy & long way of doing the filter function
+
 export function removeFromCart(productId) {
-  const newCart = [];
-
-  cart.forEach((cartItem) => {
-    if (cartItem.productId !== productId) {
-      newCart.push(cartItem);
-    }
-  });
-
-  cart = newCart
+  cart = cart.filter((cartItem) => cartItem.productId !== productId);
 }
 // [removeFromCart](#anchor5)
