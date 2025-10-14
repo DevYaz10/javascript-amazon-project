@@ -1,5 +1,7 @@
+// Load the persisted cart so product and checkout pages stay in sync.
 export let cart = JSON.parse(localStorage.getItem("cart"));
 
+// Seed a starter cart when nothing is saved yet so the UI has sample items.
 if (!cart) {
   cart = [
     {
@@ -15,10 +17,12 @@ if (!cart) {
   ];
 }
 
+// Write the latest cart state back to localStorage.
 function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+// Add a product or increment its quantity, then persist the update.
 export function addToCart(productId) {
   let matchingItem;
 
@@ -41,6 +45,7 @@ export function addToCart(productId) {
 }
 // [addToCart](#anchor4)
 
+// Remove a product from the cart and persist the result.
 export function removeFromCart(productId) {
   cart = cart.filter((cartItem) => cartItem.productId !== productId);
   saveToStorage();
@@ -61,6 +66,7 @@ export function removeFromCart(productId) {
 
 // [removeFromCart](#anchor5)
 
+// Record the selected delivery option for a product and sync storage.
 export function updateDeliveryOption(productId, deliveryOptionId) {
   let matchingItem;
 

@@ -1,8 +1,11 @@
+// Import shared cart helpers and product data for the storefront page.
 import  * as cartModule  from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+// Accumulate product HTML so we can inject it into the DOM in one operation.
 let productsHTML = "";
 
+// Render each product card with image, rating, price, and add-to-cart button.
 products.forEach((product) => {
   productsHTML += `
     <div class="product-container">
@@ -56,9 +59,11 @@ products.forEach((product) => {
     </div>`; // the "data" attribute above it an HTML attribute that starts with "data-" then any name of choice (kebab-case)
 }); // this data attribute is used to attach any information to an element
 // [data](#anchor3)
+// Inject all product cards into the page at once.
 document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
 //# the who add-t-cart function
+// Attach click listeners that add the selected product to the cart and update the badge.
 document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
     const productId = button.dataset.productId; 
