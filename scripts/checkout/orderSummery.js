@@ -1,30 +1,29 @@
-// Pull in cart state, product catalog, delivery options, formatter, and dayjs helpers.
+// Import cart state helpers, product catalog access, delivery data helpers, currency formatting, and date utilities.
 import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { getProducts } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.7/esm/index.js";
-//? not using {} is a "Default Export"; it's another way to export something from a file, we use it when export only one thing from a file
-import { deliveryOptions } from "../../data/deliveryOptions.js";
+// dayjs is exported as the default module, so we import it without curly braces.
+import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 
-
+// Render the entire order summary section based on the current cart state.
 export function renderOrderSummery() {
-  // Build markup for each item currently in the cart.
+  // Start with an empty string that will accumulate the markup for each cart item.
   let cartSummeryHTML = "";
 
+  // Iterate over each item in the cart, generating its markup and appending it to the total.
   cart.forEach((cartItem) => {
-    // Pair the cart item with its product details.
-    const matchingProduct = products.find(
-      (product) => product.id === cartItem.productId
-    );
-    // Read the selected delivery option so we can show shipping info.
-    const deliveryOption = deliveryOptions.find(
-      (option) => option.id === cartItem.deliveryOptionId
-    );
+    // Retrieve the product information associated with this cart entry.
+    const matchingProduct = getProducts(cartItem.productId);
+    // Look up the delivery option currently selected for this item.
+    const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId)
     const today = dayjs();
+    // Compute the formatted delivery date shown to the shopper.
     const deliveryDateFormatted = today
       .add(deliveryOption.deliveryDays, "days")
       .format("dddd, MMMM D");
 
+    // Append the markup for the item, including controls and delivery choices.
     cartSummeryHTML += `
     <div class="cart-item-container js-cart-item-container-${
       matchingProduct.id
@@ -68,10 +67,10 @@ export function renderOrderSummery() {
       `;
   });
 
-  // Paint the assembled markup into the order summary container.
+  // Inject the assembled markup into the order summary container in the DOM.
   const orderSummaryElement = document.querySelector(".js-order-summary");
   orderSummaryElement.innerHTML = cartSummeryHTML;
-  // Attach delete handlers so removing an item updates storage and the UI.
+  // Bind delete handlers so removing an item updates storage and the rendered view.
   orderSummaryElement
     .querySelectorAll(".js-delete-quantity-link")
     .forEach((link) => {
@@ -82,12 +81,13 @@ export function renderOrderSummery() {
       });
     });
 
-  // Attach delivery option handlers to save the selection and refresh the UI.
+  // Bind delivery option handlers so the selected shipping choice is saved and reflected.
   orderSummaryElement
     .querySelectorAll(".js-delivery-option")
     .forEach((element) => {
       element.addEventListener("click", () => {
-        const { productId, deliveryOptionId } = element.dataset; //? this is a short hand version
+        // Destructure the identifiers stored in data attributes for readability.
+        const { productId, deliveryOptionId } = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummery();
       });
@@ -95,19 +95,23 @@ export function renderOrderSummery() {
 }
 
 
+// Generate the delivery option markup for a single product line item.
 function deliveryOptionsHTML(matchingProduct, cartItem) {
-  // Build the list of delivery options with the correct radio selected.
+  // Collect the HTML for each delivery option, marking the selected one as checked.
   let html = "";
   deliveryOptions.forEach((deliveryOption) => {
     const today = dayjs();
+    // Compute the date label shown next to each delivery option.
     const deliveryDateFormatted = today
       .add(deliveryOption.deliveryDays, "days")
       .format("dddd, MMMM D");
+    // Convert the price into a readable string, treating zero-cost shipping as FREE.
     const priceString =
       deliveryOption.priceCents === 0
         ? "FREE"
-        : `$${formatCurrency(deliveryOption.priceCents)}`; //# this thing is like an if statement but you can save it to a variable
+        : `$${formatCurrency(deliveryOption.priceCents)}`;
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
+    // Build the radio button markup for this delivery option.
     html += `
     <div class="delivery-option js-delivery-option"
     data-product-id="${matchingProduct.id}"
