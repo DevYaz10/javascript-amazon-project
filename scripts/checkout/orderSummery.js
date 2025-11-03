@@ -5,8 +5,9 @@ import { formatCurrency } from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.7/esm/index.js";
 // dayjs is exported as the default module, so we import it without curly braces.
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
-
 // Render the entire order summary section based on the current cart state.
+import { renderPaymentSummary } from "./paymentSummery.js";
+
 export function renderOrderSummery() {
   // Start with an empty string that will accumulate the markup for each cart item.
   let cartSummeryHTML = "";
@@ -78,6 +79,7 @@ export function renderOrderSummery() {
         const productId = link.dataset.productId;
         removeFromCart(productId);
         renderOrderSummery();
+        renderPaymentSummary();
       });
     });
 
@@ -90,6 +92,7 @@ export function renderOrderSummery() {
         const { productId, deliveryOptionId } = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummery();
+        renderPaymentSummary();
       });
     });
 }
