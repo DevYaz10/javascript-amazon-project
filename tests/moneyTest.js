@@ -12,6 +12,7 @@ import { formatCurrency } from "../scripts/utils/money.js";
 
 console.log("test suite: formatCurrency");  //? groupe of related tests are called a test suite
 
+console.log("convert cents into dollars"); //? name of the test case 
 
 if(formatCurrency(2095) === "20.95") {  //? this is called a test case 
     console.log("pass");
@@ -20,17 +21,23 @@ else {
     console.log("fail");
 };
 
+console.log("works with 0");
+
 if (formatCurrency(0) === "0.00") {  //? this is another test case
     console.log("pass");
 } else {
     console.log("fail");
 };
 
+console.log("works with decimal values");
+
 if (formatCurrency(2000.5) === "20.01") {
     console.log("pass");
 } else {
     console.log("fail");
 };
+
+console.log("works with decimal values");
 
 if (formatCurrency(2000.4) === "20.00") {
     console.log("pass");
