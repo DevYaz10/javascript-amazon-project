@@ -26,7 +26,9 @@ export function renderOrderSummery() {
 
     // Append the markup for the item, including controls and delivery choices.
     cartSummeryHTML += `
-    <div class="cart-item-container js-cart-item-container-${
+    <div class="cart-item-container 
+    js-cart-item-container 
+    js-cart-item-container-${
       matchingProduct.id
     }">
       <div class="delivery-date">
@@ -42,7 +44,10 @@ export function renderOrderSummery() {
           <div class="product-price">
             $${formatCurrency(matchingProduct.priceCents)}
           </div>
-          <div class="product-quantity">
+          <div class="product-quantity
+          js-product-quantity-${
+            matchingProduct.id
+          }">
             <span>
               Quantity: <span class="quantity-label">${cartItem.quantity}</span>
             </span>
@@ -51,7 +56,8 @@ export function renderOrderSummery() {
             </span>
             <span class="delete-quantity-link 
             js-delete-quantity-link 
-            link-primary"
+            link-primary
+            js-delete-link-${matchingProduct.id}"
             data-product-id="${matchingProduct.id}">
               Delete
             </span>
