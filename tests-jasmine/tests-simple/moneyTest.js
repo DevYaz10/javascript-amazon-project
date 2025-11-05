@@ -8,7 +8,7 @@
 
 //# automated testing is using code to test the code 
 
-import { formatCurrency } from "../scripts/utils/money.js";
+import { formatCurrency } from "../../scripts/utils/money.js";
 
 console.log("test suite: formatCurrency");  //? groupe of related tests are called a test suite
 
@@ -51,3 +51,6 @@ if (formatCurrency(2000.4) === "20.00") {
 // 2. edge case
 //? basic test case is testing if the code works as expected
 //? edge case is testing if the code works with tricky values
+
+//! but there is a better way to test code 
+//$ testing frameworks (Jasmine in this case)
