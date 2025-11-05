@@ -1,21 +1,27 @@
 // Load the persisted cart so product and checkout pages stay in sync.
-export let cart = JSON.parse(localStorage.getItem("cart"));
+export let cart;
 
-// Seed a starter cart when nothing is saved yet so the UI has sample items.
-if (!cart) {
-  cart = [
-    {
-      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-      quantity: 2,
-      deliveryOptionId: "1",
-    },
-    {
-      productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-      quantity: 1,
-      deliveryOptionId: "2",
-    },
-  ];
-}
+loadFromStorage();
+
+export function loadFromStorage() {
+  cart = JSON.parse(localStorage.getItem("cart"));
+
+  // Seed a starter cart when nothing is saved yet so the UI has sample items.
+  if (!cart) {
+    cart = [
+      {
+        productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+        quantity: 2,
+        deliveryOptionId: "1",
+      },
+      {
+        productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+        quantity: 1,
+        deliveryOptionId: "2",
+      },
+    ];
+  };
+};
 
 // Write the latest cart state back to localStorage.
 function saveToStorage() {

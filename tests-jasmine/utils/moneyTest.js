@@ -1,6 +1,6 @@
 //# jasmine is a testing framework 
 
-import { formatCurrency } from "../scripts/utils/money.js";
+import { formatCurrency } from "../../scripts/utils/money.js";
 
 //$ describe() makes a test suite 
 describe("test suite: formatCurrency", () => {
