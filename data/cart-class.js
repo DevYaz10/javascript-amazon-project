@@ -4,18 +4,18 @@
 //? Class is basiclly an object generator and it's much cleaner than functions
 class Cart {
   cartItems;
-  localStorageKey;
+  #localStorageKey; //? private property: means it can't be accessed from outside the class
+  //  line 88-92
 
   //? constructor is a special method that is a set up for the class
   constructor(localStorageKey) {
-    //? set the localStorageKey for each cart
-    this.localStorageKey = localStorageKey;
-
-    this.loadFromStorage();
+    // set the localStorageKey for each cart
+    this.#localStorageKey = localStorageKey;
+    this.#loadFromStorage(); // makes a private method 
   }
 
-  loadFromStorage() {
-    this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+  #loadFromStorage() {
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
     if (!this.cartItems) {
       this.cartItems = [
@@ -34,7 +34,7 @@ class Cart {
   }
 
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId) {
@@ -84,6 +84,11 @@ class Cart {
 //? the values inside here will be considered the values for the constructor
 const cart = new Cart("cart-oop");
 const buisnessCart = new Cart("cart-buisness");
+
+//? now if we try to access the localStorageKey it will throw an error
+// console.log(cart.#localStorageKey);
+// console.log(buisnessCart.#localStorageKey);
+//! this makes it much safer
 
 console.log(cart);
 console.log(buisnessCart);
