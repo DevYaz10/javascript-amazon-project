@@ -4,6 +4,7 @@ import { getProducts } from "../../data/products.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.7/esm/index.js";
 // dayjs is exported as the default module, so we import it without curly braces.
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
+import { formatCurrency } from "../utils/money.js";
 // Render the entire order summary section based on the current cart state.
 import { renderPaymentSummary } from "./paymentSummery.js";
 
@@ -117,7 +118,8 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
     const priceString =
       deliveryOption.priceCents === 0
         ? "FREE"
-        : deliveryOption.getPrice();
+        : `$${formatCurrency(deliveryOption.priceCents)}`;
+
     const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
     // Build the radio button markup for this delivery option.
     html += `
