@@ -19,11 +19,34 @@ class Product {
   }
 
   getStarsUrl() {
-    return `images/ratings/rating-${this.rating.stars * 10}.png`
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
 
   getPrice() {
     return `$${formatCurrency(this.priceCents)}`;
+  }
+
+  extrainfoHTML() {
+    return "";
+  }
+}
+//$ this is inheritance
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails) {
+    super(productDetails);  //? this calls the constructor of the parent class (in this case it sets the productDetails)
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  //$ this is method overriding (it overrides the method from the parent class)
+  extrainfoHTML() {
+    // super.extrainfoHTML(); this calls the method from the parent class
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">  <!--target="_blank" opens the link in a new tab-->
+        Size Chart
+      </a>
+    `;
   }
 }
 
@@ -500,7 +523,8 @@ export const products = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((productDetails) => {
+  if (productDetails.type === "clothing") {
+    return new Clothing(productDetails)
+  }
   return new Product(productDetails);
-});
-console.log(products);
-
+}); //? .map() loops through an array and run function on each value

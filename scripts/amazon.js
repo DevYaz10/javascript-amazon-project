@@ -44,6 +44,13 @@ products.forEach((product) => {
         </select>
         </div>
 
+        ${product.extrainfoHTML()} 
+        
+        <!--
+        this is called polymorphism (it's when a method has the same name but different implementation)
+        it's kinda like using if statement to check the type of the object and then calling the appropriate method
+        -->
+        
         <div class="product-spacer"></div>
 
         <div class="added-to-cart">

@@ -1,6 +1,7 @@
 //# this is an example of Object-Oriented Programing which makes it easy to make multiple of the same objects
-
+//# Object-Oriented Programing is = Organizing code into objects (trying to represent real life)
 //$ use PascalCase for things that generate objects
+//$ this is a constructor function that generates objects
 function Cart(localStorageKey) {
   const cart = {
     cartItems: undefined,
