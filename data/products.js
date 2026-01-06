@@ -53,6 +53,34 @@ class Clothing extends Product {
 
 export let products = [];
 
+//# fetch() is a better way to make http requests using a promise instead of a callback
+export function loadProductsFetch() {
+  const promise = fetch('https://supersimplebackend.dev/products')  //? it makes a GET request by default
+  
+  .then((response) => { //? response is like the resolved value from a promise (checkout checkout.js line 22)
+    return response.json(); // this even convert the json to an array
+  })
+  
+  .then((productsData) => {
+    products = productsData.map((productDetails) => {
+      if (productDetails.type === "clothing") {
+        return new Clothing(productDetails)
+      }
+      return new Product(productDetails);
+    });
+    console.log('load products');
+  })
+  
+  return promise;
+}
+/*
+loadProductsFetch().then(() => {
+  console.log("next step");
+});
+*/
+
+//! old way (using XMLHttpRequest)
+
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
   
@@ -73,6 +101,9 @@ export function loadProducts(fun) {
   
 }
 
+
+
+//! older lamer way using written array
 /*
 // Catalog of products rendered on the storefront page.
 export const products = [

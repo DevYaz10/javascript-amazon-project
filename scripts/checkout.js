@@ -1,11 +1,15 @@
 import { renderOrderSummery } from "./checkout/orderSummery.js";
 import { renderPaymentSummary } from "./checkout/paymentSummery.js";
-import { loadProducts } from "../data/products.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 // import "../data/cart-class.js";
 // import "../data/backend-practice.js";
 
 Promise.all([
+  loadProductsFetch(),
+
+//! this is the old way of doing it with callbacks
+/*
   new Promise((resolve) => {
   //? resolve is similar to done() function - let's u control when to go to the next step
   console.log("started loading");
@@ -13,6 +17,7 @@ Promise.all([
     resolve('value1'); //? this value is passed to the next .then() block
     });
   }),
+*/
   new Promise((resolve) => {
     loadCart(() => {
       resolve('value2');
