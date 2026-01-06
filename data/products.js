@@ -70,7 +70,11 @@ export function loadProductsFetch() {
     });
     console.log('load products');
   })
-  
+
+  .catch(() => { //? this is error handling using promises
+    console.log("Unexpected error: please try again later.");
+  })
+
   return promise;
 }
 /*
@@ -96,11 +100,13 @@ export function loadProducts(fun) {
     if (typeof fun === 'function') fun();
   });
   
+  xhr.addEventListener('error', (error) => { //? this is called error handling
+    console.log("Unexpected error: please try again later.");
+  })
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
-  
 }
-
 
 
 //! older lamer way using written array

@@ -74,17 +74,30 @@ loadProducts(() => {
 //# this is an async function that returns a promise (it's like a wrapper for a promise)
 //$ shorter and more clean code
 async function loadPageAsync() {
+  try {
+
+    // throw 'error1';  //$this is manually creating an error (throwing an error to catch)
+    //? throwing an error skips the rest of the code in the try block and goes straightto the catch block
+
+    await loadProductsFetch(); //? u can only use await inside an async function
+    //? sidenote: the closest function to await MUST be async... u can't use await inside a regular function
+    
+    const value3 = await new Promise((resolve, reject) => {
+      // throw 'error2'; //? try this and u will skip the whole loadCart function
+      loadCart(() => {
+        // reject('error3'); //? throw does not work in the future that's why we use reject
+        resolve('value3'); //? here we can just save the value in a variable i.e. the value3 variable
+      });
+    })
+  } catch (error) {
+    console.log("Unexpected error: please try again later.", error);
+  } // u can only use try and catch together 
+    //$ u use try/catch to handle errors in (stuff that would probably throw an "unexpected" error like API calls)
+    //$ API call: it's a request to a server to get some data
+    //$ try/catch can be used in normal code too!! 
+  
   console.log("load page");
   
-  await loadProductsFetch(); //? u can only use await inside an async function
-  //? sidenote: the closest function to await MUST be async... u can't use await inside a regular function
-  
-  const value3 = await new Promise((resolve) => {
-    loadCart(() => {
-      resolve('value3'); //? here we can just save the value in a variable i.e. the value3 variable
-    });
-  })
-
   renderOrderSummery();
   renderPaymentSummary();
   
