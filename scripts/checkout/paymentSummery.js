@@ -2,6 +2,7 @@ import { cart } from "../../data/cart.js";
 import { getProducts } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../utils/money.js";
+import { addOrder } from "../../data/orders.js";
 
 export function renderPaymentSummary() {
   let productPriceCents = 0;
@@ -56,10 +57,33 @@ export function renderPaymentSummary() {
             )}</div>
         </div>
 
-        <button class="place-order-button button-primary">
+        <button class="place-order-button button-primary js-place-order">
             Place your order
         </button>
     `;
 
   document.querySelector(".js-payment-summary").innerHTML = paymentSummeryHTML;
+
+  document.querySelector(".js-place-order")
+  .addEventListener("click", async () => {
+    try {
+      const response = await fetch('https://supersimplebackend.dev/orders', { //? this is how to make another type of request
+        method: 'POST',
+        headers: { //? headers gives the backend more information about the request 
+          'Content-Type': 'application/json', //? this is the type of data we're sending to the backend
+        },
+        body: JSON.stringify({ //? body is the actual data we are sending to the backend (it should be documented what u gotta send in the API docs)
+          cart: cart
+        })
+      })
+
+      const order = await response.json();
+      addOrder(order);
+
+    } catch (error) {
+      console.log('Unexpected error: please try again later.');
+    }
+    
+    window.location.href = 'orders.html' //? this let's u control the url and redirect the user to the orders page
+  });
 }
