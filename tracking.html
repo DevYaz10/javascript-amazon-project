@@ -88,5 +88,10 @@
         </div>
       </div>
     </div>
+    <script>
+      const url = new URL(window.location.href); // this URL constructor creates a URL object from the current page's URL and breaks it down into its components
+      console.log((url.searchParams.get('orderId'))); // this will get the value of the orderId parameter from the URL
+      console.log((url.searchParams.get('productId'))); 
+    </script>
   </body>
 </html>
